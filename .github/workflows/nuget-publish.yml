@@ -20,7 +20,7 @@ jobs:
         dotnet-version: '9.0.x'
 
     - name: 📦 Restore dependencies
-      run: dotnet restore package/JT.SmartConfigManager/SmartConfigManager.csproj
+      run: dotnet restore package/JT.SmartConfigManager/JT.SmartConfigManager/SmartConfigManager.csproj
 
     - name: 🏗️ Build project
       run: dotnet build package/JT.SmartConfigManager/JT.SmartConfigManager.csproj --configuration Release
