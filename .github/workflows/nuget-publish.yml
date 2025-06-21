@@ -18,16 +18,13 @@ jobs:
     - name: 🛠️ Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '9.0.x'  # Adjust if needed
+        dotnet-version: '9.0.x'  # Adjust if you're using a different version
 
     - name: 📦 Restore dependencies
-      run: dotnet restore package/JT.SmartConfigManager/JT.SmartConfigManager.csproj
+      run: dotnet restore
 
-    - name: 🏗️ Build project
-      run: dotnet build package/JT.SmartConfigManager/JT.SmartConfigManager.csproj --configuration Release
-
-    - name: 📦 Pack NuGet package
-      run: dotnet pack package/JT.SmartConfigManager/JT.SmartConfigManager.csproj --configuration Release --output out
+    - name: 🏗️ Build and generate NuGet package
+      run: dotnet build --configuration Release
 
     - name: 🚀 Publish to NuGet
-      run: dotnet nuget push out/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY_SMARTCONFIGMANAGER }}
+      run: dotnet nuget push **/bin/Release/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY_SMARTCONFIGMANAGER }}
