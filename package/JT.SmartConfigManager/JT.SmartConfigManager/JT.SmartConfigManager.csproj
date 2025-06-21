@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
 
     <PackageId>JT.SmartConfigManager</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Authors>Jayant Tripathy</Authors>
     <Company>JT Solutions</Company>
     <Description>Unified configuration manager for .NET Core apps</Description>
