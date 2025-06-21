@@ -1,0 +1,28 @@
+name: Publish NuGet Package
+
+on:
+  push:
+    tags:
+      - 'v*' # e.g. v1.0.0 will trigger
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 🧾 Checkout code
+      uses: actions/checkout@v3
+
+    - name: 🛠️ Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'  # Adjust if you're using a different version
+
+    - name: 📦 Restore dependencies
+      run: dotnet restore
+
+    - name: 🏗️ Build and generate NuGet package
+      run: dotnet build --configuration Release
+
+    - name: 🚀 Publish to NuGet
+      run: dotnet nuget push **/bin/Release/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY_SmartConfigManager }}
