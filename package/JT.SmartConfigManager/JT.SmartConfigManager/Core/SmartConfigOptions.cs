@@ -9,10 +9,10 @@ namespace JT.SmartConfigManager.Core
 {
     public class SmartConfigOptions<T> where T : class, new()
     {
-        internal List<IConfigSource> Sources { get; } = new();
-        internal Func<T, bool>? ValidationFunc { get; private set; }
-        internal string? ValidationError { get; private set; }
-        internal TimeSpan? AutoReloadInterval { get; private set; }
+        public List<IConfigSource> Sources { get; } = new();
+        public Func<T, bool>? ValidationFunc { get; private set; }
+        public string? ValidationError { get; private set; }
+        public TimeSpan? AutoReloadInterval { get; private set; }
 
         public void Validate(Func<T, bool> validator, string errorMessage)
         {

@@ -4,11 +4,17 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>1.0.0</Version>
-    <Authors>Jayant Tripathy</Authors>
+
     <PackageId>JT.SmartConfigManager</PackageId>
+    <Version>1.0.1</Version>
+    <Authors>Jayant Tripathy</Authors>
+    <Company>JT Solutions</Company>
     <Description>Unified configuration manager for .NET Core apps</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+    <PackageTags>Configuration;Azure;KeyVault;AppConfig;SmartConfig;SQL;NuGet</PackageTags>
+    <RepositoryUrl>https://github.com/JayantTripathy/JT-Nuget-Packages/JT.SmartConfigManager</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,5 +25,5 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.6" />
   </ItemGroup>
-  
+
 </Project>

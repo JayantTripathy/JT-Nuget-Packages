@@ -1,0 +1,33 @@
+# Build artifacts
+bin/
+obj/
+Debug/
+Release/
+*.dll
+*.exe
+*.pdb
+
+# NuGet artifacts
+*.nupkg
+
+# User-specific files
+*.user
+*.suo
+
+# VS Code/Visual Studio
+.vscode/
+.vs/
+
+# JetBrains Rider
+.idea/
+
+# Logs and temp
+*.log
+~$*
+
+# Test results
+TestResults/
+
+# Other IDE generated
+*.userprefs
+*.cache
