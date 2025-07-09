@@ -1,87 +1,150 @@
 ﻿using JT.SmartConfigManager.Core;
-using JT.SmartConfigManager.Demo;
 using JT.SmartConfigManager.Sources;
 using Microsoft.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+#region Swagger Setup
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 builder.Services.AddOpenApi();
+#endregion
 
-// Step 1: Create SmartConfigManager instance with config sources
+#region Load Base Configuration
+var baseConfig = builder.Configuration
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddEnvironmentVariables()
+    .Build();
+
+var earlySettings = new MyAppSettings();
+baseConfig.Bind(earlySettings);
+#endregion
+
+#region SmartConfig Setup
 var options = new SmartConfigOptions<MyAppSettings>();
 options.Sources.Add(new JsonFileSource("appsettings.json"));
-//options.Sources.Add(new AzureAppConfigSource("AzureAppConfig:ConnectionString"));
-//options.Sources.Add(new AzureKeyVaultSource("KeyVault:VaultUri"));
-options.Sources.Add(new SqlConfigSource("SqlConfig:ConnectionString", "SqlConfig:Query"));
+#endregion
 
-options.Validate(settings => !string.IsNullOrEmpty(settings?.AppSettings?.AppName), "AppName must be set!");
-options.Validate(settings => !string.IsNullOrEmpty(settings?.AppSettings?.Environment), "Environment must be set!");
+#region Add SQL Config Source
+if (!string.IsNullOrWhiteSpace(earlySettings.SqlConfig?.ConnectionString) &&
+    !string.IsNullOrWhiteSpace(earlySettings.SqlConfig?.Query))
+{
+    options.Sources.Add(new SqlConfigSource(
+        earlySettings.SqlConfig.ConnectionString,
+        earlySettings.SqlConfig.Query));
+    Console.WriteLine("✅ SQL source added");
+}
+else
+{
+    Console.WriteLine("⚠️ SQL config missing");
+}
+#endregion
+
+#region Add Azure Key Vault Source
+var vaultUri = baseConfig["KeyVault:VaultUri"];
+if (!string.IsNullOrWhiteSpace(vaultUri))
+{
+    options.Sources.Add(new AzureKeyVaultSource<MyAppSettings>(vaultUri));
+    Console.WriteLine("✅ Key Vault source added");
+}
+else
+{
+    Console.WriteLine("⚠️ Vault URI missing");
+}
+#endregion
+
+#region Add Azure App Config Source
+var azureAppConfigConn = earlySettings.AzureAppConfig?.ConnectionString;
+if (!string.IsNullOrWhiteSpace(azureAppConfigConn))
+{
+    options.Sources.Add(new AzureAppConfigSource(azureAppConfigConn));
+    Console.WriteLine("✅ AzureAppConfig source added");
+}
+else
+{
+    Console.WriteLine("⚠️ AzureAppConfig connection string not found.");
+}
+#endregion
+
+#region Validations
+options.Validate(s => !string.IsNullOrWhiteSpace(s?.AppSettings?.AppName), "AppName required");
+options.Validate(s => !string.IsNullOrWhiteSpace(s?.AppSettings?.Environment), "Environment required");
 
 #if !DEBUG
 options.EnableAutoReload(TimeSpan.FromMinutes(5));
 #endif
+#endregion
 
+#region Build Final Configuration
 var configManager = new SmartConfigManager<MyAppSettings>(options);
 
+var finalSettings = new MyAppSettings();
+var mergedConfig = new ConfigurationBuilder()
+    .AddInMemoryCollection(configManager.AllSettings!)
+    .Build();
+mergedConfig.Bind(finalSettings);
 
+// ✅ Extract Vault Secrets (exclude known sections)
+finalSettings.VaultSecretsDict = configManager.AllSettings?
+    .Where(kv =>
+        !kv.Key.StartsWith("AppSettings:") &&
+        !kv.Key.StartsWith("SqlConfig:") &&
+        !kv.Key.StartsWith("KeyVault:"))
+    .ToDictionary(kv => kv.Key, kv => kv.Value!);
 
-// Merge with default config
-builder.Services.AddSingleton(configManager.Current);
-var config = builder.Configuration;
+// ✅ Extract AzureAppConfig (only its keys)
+finalSettings.AppConfigList = configManager.AllSettings?
+    .Where(kv => kv.Key.StartsWith("AzureAppConfig:"))
+    .Select(kv => new KeyValuePair<string, string>(kv.Key, kv.Value))
+    .ToList();
+#endregion
+
+#region Print Final Settings (Console Debug)
+Console.WriteLine("\n✅ Final Config:");
+Console.WriteLine($"AppName: {finalSettings.AppSettings?.AppName}");
+Console.WriteLine($"Environment: {finalSettings.AppSettings?.Environment}");
+Console.WriteLine($"SQL Conn: {finalSettings.SqlConfig?.ConnectionString}");
+
+if (finalSettings.VaultSecretsDict != null)
+{
+    Console.WriteLine("Vault Secrets:");
+    foreach (var kv in finalSettings.VaultSecretsDict)
+        Console.WriteLine($"  {kv.Key} = {kv.Value}");
+}
+else
+{
+    Console.WriteLine("❌ VaultSecretsDict is null");
+}
+#endregion
+
+#region Register in DI
+builder.Services.AddSingleton(finalSettings);
+#endregion
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+#region Swagger UI
 if (app.Environment.IsDevelopment())
 {
+    app.UseSwagger();
+    app.UseSwaggerUI();
     app.MapOpenApi();
 }
+#endregion
 
 app.UseHttpsRedirection();
 
-var sqlConfig = new SqlConfigSettings();
-config.GetSection("SqlConfig").Bind(sqlConfig);
-
-// Health check endpoint to test SQL connection
-app.MapGet("/test-sql", async () =>
+#region Endpoints
+app.MapGet("/config", (MyAppSettings settings) => new
 {
-    try
-    {
-        await using var conn = new SqlConnection(sqlConfig.ConnectionString);
-        await conn.OpenAsync();
-
-        var cmd = new SqlCommand(sqlConfig.Query, conn);
-        using var reader = await cmd.ExecuteReaderAsync();
-
-        var results = new Dictionary<string, string>();
-        while (await reader.ReadAsync())
-        {
-            string key = reader.GetString(0);
-            string value = reader.GetString(1);
-            results[key] = value;
-        }
-
-        return Results.Ok(new
-        {
-            message = "✅ SQL query success.",
-            values = results
-        });
-    }
-    catch (Exception ex)
-    {
-        return Results.Problem($"❌ SQL failed: {ex.Message}");
-    }
+    appName = settings.AppSettings?.AppName,
+    environment = settings.AppSettings?.Environment,
+    sqlConn = settings.SqlConfig?.ConnectionString,
+    sqlQuery = settings.SqlConfig?.Query,
+    AzureAppConfig = settings.AppConfigList ?? [],
+    vaultSecrets = settings.VaultSecrets
 });
-
-// Minimal API endpoint to show config
-app.MapGet("/config", (IConfiguration config) => new
-{
-    AppName = config["AppSettings:AppName"],
-    Environment = config["AppSettings:Environment"],
-    SqlValue = config["DbKey1"], // from SQL
-    Secret = config["AppSecret"] // from Key Vault
-});
+#endregion
 
 app.Run();
+
