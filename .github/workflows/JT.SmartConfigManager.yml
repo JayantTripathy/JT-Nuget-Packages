@@ -5,7 +5,7 @@ on:
     branches:
       - main
     tags:
-      - 'smartconfig-v*'   # Only run when version tag like smartconfig-v1.0.5 is pushed
+      - 'smartconfig-v*'
 
 jobs:
   publish:
@@ -18,16 +18,20 @@ jobs:
       - name: 🛠️ Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.0.x'  # Match your target framework
+          dotnet-version: '9.0.x'
 
       - name: 📦 Restore dependencies
-        run: dotnet restore dotnet-package/SmartConfig/JT.SmartConfigManager/JT.SmartConfigManager.csproj
+        working-directory: dotnet-package/SmartConfig
+        run: dotnet restore JT.SmartConfigManager/JT.SmartConfigManager.csproj
 
       - name: 🏗️ Build project
-        run: dotnet build dotnet-package/SmartConfig/JT.SmartConfigManager/JT.SmartConfigManager.csproj --configuration Release
+        working-directory: dotnet-package/SmartConfig
+        run: dotnet build JT.SmartConfigManager/JT.SmartConfigManager.csproj --configuration Release
 
       - name: 📦 Pack NuGet package
-        run: dotnet pack dotnet-package/SmartConfig/JT.SmartConfigManager/JT.SmartConfigManager.csproj --configuration Release --output out
+        working-directory: dotnet-package/SmartConfig
+        run: dotnet pack JT.SmartConfigManager/JT.SmartConfigManager.csproj --configuration Release --output out
 
       - name: 🚀 Publish to NuGet
+        working-directory: dotnet-package/SmartConfig
         run: dotnet nuget push out/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY_SMARTCONFIGMANAGER }}
