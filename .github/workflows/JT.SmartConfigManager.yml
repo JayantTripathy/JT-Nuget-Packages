@@ -5,7 +5,7 @@ on:
     branches:
       - main
     tags:
-      - 'smartconfig-v*'
+      - 'smartconfig-v*'  # Tag pattern to trigger NuGet release
 
 jobs:
   publish:
@@ -21,17 +21,13 @@ jobs:
           dotnet-version: '9.0.x'
 
       - name: 📦 Restore dependencies
-        working-directory: dotnet-package/SmartConfig
-        run: dotnet restore JT.SmartConfigManager/JT.SmartConfigManager.csproj
+        run: dotnet restore dotnet-package/SmartConfig/JT.SmartConfigManager/JT.SmartConfigManager.csproj
 
       - name: 🏗️ Build project
-        working-directory: dotnet-package/SmartConfig
-        run: dotnet build JT.SmartConfigManager/JT.SmartConfigManager.csproj --configuration Release
+        run: dotnet build dotnet-package/SmartConfig/JT.SmartConfigManager/JT.SmartConfigManager.csproj --configuration Release
 
       - name: 📦 Pack NuGet package
-        working-directory: dotnet-package/SmartConfig
-        run: dotnet pack JT.SmartConfigManager/JT.SmartConfigManager.csproj --configuration Release --output out
+        run: dotnet pack dotnet-package/SmartConfig/JT.SmartConfigManager/JT.SmartConfigManager.csproj --configuration Release --output out
 
       - name: 🚀 Publish to NuGet
-        working-directory: dotnet-package/SmartConfig
         run: dotnet nuget push out/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY_SMARTCONFIGMANAGER }}
