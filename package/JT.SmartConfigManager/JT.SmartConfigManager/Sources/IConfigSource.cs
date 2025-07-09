@@ -8,6 +8,6 @@ namespace JT.SmartConfigManager.Sources
 {
     public interface IConfigSource
     {
-        Dictionary<string, string> Load();
+        Task<Dictionary<string, string>> LoadAsync();
     }
 }

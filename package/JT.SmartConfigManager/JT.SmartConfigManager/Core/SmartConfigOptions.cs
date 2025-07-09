@@ -24,7 +24,7 @@ namespace JT.SmartConfigManager.Core
 
         public void AddJsonFile(string path) => Sources.Add(new JsonFileSource(path));
         public void AddAzureAppConfiguration(string connection) => Sources.Add(new AzureAppConfigSource(connection));
-        public void AddAzureKeyVault(string vaultUrl) => Sources.Add(new AzureKeyVaultSource(vaultUrl));
+        public void AddAzureKeyVault(string vaultUrl) => Sources.Add(new AzureKeyVaultSource<T>(vaultUrl));
         public void AddSqlConfigStore(string connection, string table) => Sources.Add(new SqlConfigSource(connection, table));
     }
 

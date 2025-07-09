@@ -1,5 +1,6 @@
 ﻿using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
+using JT.SmartConfigManager.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,22 +9,38 @@ using System.Threading.Tasks;
 
 namespace JT.SmartConfigManager.Sources
 {
-    public class AzureKeyVaultSource : IConfigSource
+    public class AzureKeyVaultSource<T> : LazyConfigSource<T> where T : class, new()
     {
-        private readonly string _vaultUrl;
-        public AzureKeyVaultSource(string vaultUrl) => _vaultUrl = vaultUrl;
+        private readonly string _vaultUri;
 
-        public Dictionary<string, string> Load()
+        public AzureKeyVaultSource(string vaultUri)
         {
-            var client = new SecretClient(new Uri(_vaultUrl), new DefaultAzureCredential());
-            var result = new Dictionary<string, string>();
+            _vaultUri = vaultUri ?? throw new ArgumentNullException(nameof(vaultUri));
+        }
 
-            foreach (var secretProperties in client.GetPropertiesOfSecrets())
+        public override async Task<Dictionary<string, string>> LoadAsync()
+        {
+            var secrets = new Dictionary<string, string>();
+            var client = new SecretClient(new Uri(_vaultUri), new DefaultAzureCredential());
+
+            await foreach (var secretProp in client.GetPropertiesOfSecretsAsync())
             {
-                var secret = client.GetSecret(secretProperties.Name);
-                result[secret.Value.Name] = secret.Value.Value;
+                try
+                {
+                    var secret = await client.GetSecretAsync(secretProp.Name);
+                    secrets[secret.Value.Name] = secret.Value.Value;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"⚠️ Failed to fetch secret '{secretProp.Name}': {ex.Message}");
+                }
             }
-            return result;
+
+            SetValue("VaultSecretsDict", secrets); // <-- This sets it in your strongly typed config
+
+            return secrets;
         }
     }
+
+
 }

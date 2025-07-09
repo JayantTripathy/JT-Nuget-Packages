@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using JT.SmartConfigManager.Sources;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +13,18 @@ namespace JT.SmartConfigManager.Sources
         private readonly string _connection;
         public AzureAppConfigSource(string connection) => _connection = connection;
 
-        public Dictionary<string, string> Load()
+        public Task<Dictionary<string, string>> LoadAsync()
         {
-            var config = new ConfigurationBuilder().AddAzureAppConfiguration(_connection).Build();
-            return config.AsEnumerable()
-                         .Where(kv => kv.Value != null)
-                         .ToDictionary(kv => kv.Key, kv => kv.Value!);
+            var config = new ConfigurationBuilder()
+                .AddAzureAppConfiguration(_connection)
+                .Build();
+
+            var dict = config.AsEnumerable()
+                             .Where(kv => kv.Value != null)
+                             .ToDictionary(kv => kv.Key, kv => kv.Value!);
+
+            return Task.FromResult(dict);
         }
     }
 }
+

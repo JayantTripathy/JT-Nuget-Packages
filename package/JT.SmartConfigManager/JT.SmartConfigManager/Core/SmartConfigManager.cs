@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using JT.SmartConfigManager.Sources;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,32 +14,53 @@ namespace JT.SmartConfigManager.Core
         private T _current = new();
         private Timer? _timer;
 
+        // ✅ Expose final merged config dictionary
+        public Dictionary<string, string>? AllSettings { get; private set; }
+        public Dictionary<string, string>? VaultSecrets { get; private set; } // ✅ Add this
+
+
         public T Current => _current;
 
         public SmartConfigManager(SmartConfigOptions<T> options)
         {
             _options = options;
-            Load();
+            LoadAsync().Wait(); // sync wait on constructor
 
-            if (options.AutoReloadInterval.HasValue)
+            if (_options.AutoReloadInterval.HasValue)
             {
-                _timer = new Timer(_ => Load(), null, options.AutoReloadInterval.Value, options.AutoReloadInterval.Value);
+                _timer = new Timer(_ => LoadAsync(), null, _options.AutoReloadInterval.Value, _options.AutoReloadInterval.Value);
             }
         }
 
-        private void Load()
+        private async Task LoadAsync()
         {
-            var merged = new Dictionary<string, string>();
+            var merged = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            var vaultOnly = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
             foreach (var source in _options.Sources)
             {
-                var data = source.Load();
+                var data = await source.LoadAsync();
+
+                if (source is AzureKeyVaultSource<T>)
+                {
+                    foreach (var kv in data)
+                        vaultOnly[kv.Key] = kv.Value!;
+                }
+
                 foreach (var kv in data)
-                    merged[kv.Key] = kv.Value;
+                    merged[kv.Key] = kv.Value!;
             }
+
+            AllSettings = merged;
+            VaultSecrets = vaultOnly;
 
             var config = new ConfigurationBuilder().AddInMemoryCollection(merged).Build();
             var bound = new T();
             config.Bind(bound);
+
+            // ✅ Inject vault secrets if supported
+            if (bound is IVaultInjectable injectable)
+                injectable.VaultSecretsDict = vaultOnly;
 
             if (_options.ValidationFunc != null && !_options.ValidationFunc(bound))
                 throw new Exception(_options.ValidationError);
@@ -46,6 +68,8 @@ namespace JT.SmartConfigManager.Core
             _current = bound;
         }
 
-        public void Start() => Load();
+
+
+        public void Start() => LoadAsync().Wait();
     }
 }

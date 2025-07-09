@@ -12,12 +12,17 @@ namespace JT.SmartConfigManager.Sources
         private readonly string _path;
         public JsonFileSource(string path) => _path = path;
 
-        public Dictionary<string, string> Load()
+        public Task<Dictionary<string, string>> LoadAsync()
         {
-            var config = new ConfigurationBuilder().AddJsonFile(_path).Build();
-            return config.AsEnumerable()
-                         .Where(kv => kv.Value != null)
-                         .ToDictionary(kv => kv.Key, kv => kv.Value!);
+            var config = new ConfigurationBuilder()
+                .AddJsonFile(_path)
+                .Build();
+
+            var values = config.AsEnumerable()
+                .Where(kv => kv.Value != null)
+                .ToDictionary(kv => kv.Key, kv => kv.Value!);
+
+            return Task.FromResult(values);
         }
     }
 }
