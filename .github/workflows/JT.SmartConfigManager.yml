@@ -5,7 +5,9 @@ on:
     branches:
       - main
     tags:
-      - 'smartconfig-v*'  # Tag pattern to trigger NuGet release
+      - 'smartconfig-v*'   # Optional: Only publish when tagged
+    paths:
+      - 'dotnet-package/SmartConfig/**'  # ✅ Only run when SmartConfig project changes
 
 jobs:
   publish:
