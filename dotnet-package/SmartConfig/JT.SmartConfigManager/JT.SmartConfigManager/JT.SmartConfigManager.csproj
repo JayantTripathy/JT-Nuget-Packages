@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
 
     <PackageId>JT.SmartConfigManager</PackageId>
-    <Version>1.0.6</Version>
+    <Version>1.0.7</Version>
     <Authors>Jayant Tripathy</Authors>
     <Company>JT Solutions</Company>
     <Description>Unified configuration manager for .NET Core apps</Description>
@@ -14,7 +14,7 @@
 
     <PackageTags>Configuration;Azure;KeyVault;AppConfig;SmartConfig;SQL;NuGet</PackageTags>
     <RepositoryUrl>https://github.com/JayantTripathy/JT-Nuget-Packages/tree/main/dotnet-package/SmartConfig/JT.SmartConfigManager</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/JayantTripathy/JT-Nuget-Packages/tree/main/consume/JT.SmartConfigManager.Demo</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/JayantTripathy/JT-Nuget-Packages/tree/main/dotnet-package-consume/JT.SmartConfigManager.Demo</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
