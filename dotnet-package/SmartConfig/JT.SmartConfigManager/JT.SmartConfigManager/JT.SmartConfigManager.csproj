@@ -20,13 +20,20 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
+  <!-- ✅ README.md -->
   <ItemGroup>
-    <None Include="..\..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <!-- ✅ Icon (use forward slashes and ensure file exists) -->
+  <ItemGroup>
+    <None Update="wwwroot/images/JT.png">
+      <Pack>true</Pack>
+      <PackagePath>./</PackagePath>
     </None>
   </ItemGroup>
 
+  <!-- ✅ NuGet dependencies -->
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.6" />
     <PackageReference Include="Microsoft.Extensions.Configuration.AzureAppConfiguration" Version="8.2.0" />
@@ -34,13 +41,6 @@
     <PackageReference Include="Azure.Identity" Version="1.14.0" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.6" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="wwwroot\images\JT.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
   </ItemGroup>
 
 </Project>
