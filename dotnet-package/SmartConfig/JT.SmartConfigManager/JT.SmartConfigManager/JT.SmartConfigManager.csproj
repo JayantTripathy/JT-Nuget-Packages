@@ -25,10 +25,6 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include="C:\Users\USER\Downloads\JT.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -38,6 +34,13 @@
     <PackageReference Include="Azure.Identity" Version="1.14.0" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="wwwroot\images\JT.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
