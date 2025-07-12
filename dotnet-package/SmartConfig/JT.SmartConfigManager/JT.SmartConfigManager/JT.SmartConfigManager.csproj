@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
 
     <PackageId>JT.SmartConfigManager</PackageId>
-    <Version>1.0.8</Version>
+    <Version>1.0.9</Version>
     <Authors>Jayant Tripathy</Authors>
     <Company>JT Solutions</Company>
     <Description>Unified configuration manager for .NET Core apps</Description>
@@ -16,7 +16,20 @@
     <RepositoryUrl>https://github.com/JayantTripathy/JT-Nuget-Packages/tree/main/dotnet-package/SmartConfig/JT.SmartConfigManager</RepositoryUrl>
     <PackageProjectUrl>https://github.com/JayantTripathy/JT-Nuget-Packages/tree/main/package-consume/SmartConfig-Demo/JT.SmartConfigManager.Demo</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>JT.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="C:\Users\USER\Downloads\JT.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.6" />
