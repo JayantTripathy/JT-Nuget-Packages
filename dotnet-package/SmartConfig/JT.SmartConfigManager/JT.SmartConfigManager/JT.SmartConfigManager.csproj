@@ -22,16 +22,9 @@
 
   <!-- ✅ README.md -->
   <ItemGroup>
-    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="JT.png" Pack="true" PackagePath="." />
   </ItemGroup>
 
-  <!-- ✅ Icon (use forward slashes and ensure file exists) -->
-  <ItemGroup>
-    <None Update="wwwroot/images/JT.png">
-      <Pack>true</Pack>
-      <PackagePath>./</PackagePath>
-    </None>
-  </ItemGroup>
 
   <!-- ✅ NuGet dependencies -->
   <ItemGroup>
