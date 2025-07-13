@@ -4,8 +4,8 @@ A modular and extensible .NET utility library that simplifies integration of cor
 
 ---
 
-🔗 [GitHub Repository of JT.UtilityManager](https://github.com/YourUsername/JT.UtilityManager) <br>
-🔗 [GitHub Repository of Unit Test](https://github.com/YourUsername/JT.UtilityManager) <br>
+🔗 [GitHub Repository of JT.UtilityManager](https://github.com/YourUsername/JT.UtilityManager)
+🔗 [GitHub Repository of Unit Test](https://github.com/YourUsername/JT.UtilityManager)
 🔗 [GitHub Repository of Sample Demo to learn how to use it](https://github.com/YourUsername/JT.UtilityManager)
 
 ## 🚀 Features
@@ -157,15 +157,6 @@ This library is licensed under the <a href="https://mit-license.org/"> MIT Licen
 🔗 Related Package on Nuget
 
 <a href="https://www.nuget.org/packages/JT.SmartConfigManager/">SmartConfigManager</a>
-
-
-## Hi, I'm [Jayant Tripathy][<a href="https://jayanttripathy.com">website</a>] 👋 <img src="https://komarev.com/ghpvc/?username=JayantTripathy" alt="cprespider" align="center" />
-
-- 🌱 I’m currently learning advanced concepts of AWS and Azure
-- 👯 I’m looking to collaborate with other content creators on [<a href="https://www.youtube.com/@JayantT">YouTube</a>]
-- 🥅 2024-2025 Goals: get 10k subscribers on YouTube
-- ⚡ Fun fact: I love to watch cricket & listen to songs
-
 
 
 
