@@ -3,9 +3,9 @@ name: 📦 Publish JT.UtilityManager NuGet Package
 on:
   push:
     tags:
-      - 'utility-v*'   # Example: utility-v1.0.2
+      - 'utility-v*'             # 🔁 Trigger on version tags like 'smartconfig-v1.0.10'
     paths:
-      - 'src/JT.UtilityManager/**'
+      - 'src/JT.UtilityManager/**'  # ✅ Only run if SmartConfig project is touched
 
 jobs:
   publish:
