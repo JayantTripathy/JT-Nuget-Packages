@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <PackageId>JT.UtilityManager</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Jayant Tripathy</Authors>
+    <Company>Jayant Tripathy</Company>
+    <Description>Collection of utility services including Caching, Logging, Conversion, and more for .NET Core applications</Description>
+    <PackageTags>utility;dotnet;configuration;caching;redis;logging;converters;helpers</PackageTags>
+    <RepositoryUrl>https://github.com/JayantTripathy/JT-Nuget-Packages</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/JayantTripathy/JT-Nuget-Packages</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>JT.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Interfaces\**" />
+    <EmbeddedResource Remove="Interfaces\**" />
+    <None Remove="Interfaces\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="" />
+    <None Include="JT.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.0" />
+    <PackageReference Include="StackExchange.Redis" Version="2.7.28" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Caching\" />
+    <Folder Include="Converters\" />
+    <Folder Include="Logging\" />
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
+</Project>

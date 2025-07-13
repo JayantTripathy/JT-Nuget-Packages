@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36127.28 d17.14
+VisualStudioVersion = 17.14.36127.28
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
@@ -16,6 +16,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JT.SmartConfigManager.Tests", "tests\JT.SmartConfigManager.Tests\JT.SmartConfigManager.Tests.csproj", "{7EFDCD68-D2AB-4790-9EBA-A1F28A3DE0B8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JT.SmartConfigManager.Demo", "samples\JT.SmartConfigManager.Demo\JT.SmartConfigManager.Demo.csproj", "{61074CF4-68E3-46E6-BF9D-EFA1282AEC37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JT.UtilityManager", "src\JT.UtilityManager\JT.UtilityManager.csproj", "{07202537-A386-407C-8A1A-E253B9BD4DD8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JT.UtilityManager.Tests", "tests\JT.UtilityManager.Tests\JT.UtilityManager.Tests.csproj", "{9D81184D-5528-4954-A75B-5ABE361C469C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JT.UtilityManager.Demo", "samples\JT.UtilityManager.Demo\JT.UtilityManager.Demo.csproj", "{26B2CFA4-D1D0-44A2-8603-E1E40ECAAF50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +41,18 @@ Global
 		{61074CF4-68E3-46E6-BF9D-EFA1282AEC37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61074CF4-68E3-46E6-BF9D-EFA1282AEC37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61074CF4-68E3-46E6-BF9D-EFA1282AEC37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07202537-A386-407C-8A1A-E253B9BD4DD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07202537-A386-407C-8A1A-E253B9BD4DD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07202537-A386-407C-8A1A-E253B9BD4DD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07202537-A386-407C-8A1A-E253B9BD4DD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D81184D-5528-4954-A75B-5ABE361C469C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D81184D-5528-4954-A75B-5ABE361C469C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D81184D-5528-4954-A75B-5ABE361C469C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D81184D-5528-4954-A75B-5ABE361C469C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26B2CFA4-D1D0-44A2-8603-E1E40ECAAF50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26B2CFA4-D1D0-44A2-8603-E1E40ECAAF50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26B2CFA4-D1D0-44A2-8603-E1E40ECAAF50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26B2CFA4-D1D0-44A2-8603-E1E40ECAAF50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +61,9 @@ Global
 		{32E7243A-6FFE-4DA0-8385-DA21608E5770} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{7EFDCD68-D2AB-4790-9EBA-A1F28A3DE0B8} = {0AC00A27-3404-4640-A544-92C77540D2A1}
 		{61074CF4-68E3-46E6-BF9D-EFA1282AEC37} = {498415CF-11AF-45B0-ABCD-0C6C4D8F6F50}
+		{07202537-A386-407C-8A1A-E253B9BD4DD8} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{9D81184D-5528-4954-A75B-5ABE361C469C} = {0AC00A27-3404-4640-A544-92C77540D2A1}
+		{26B2CFA4-D1D0-44A2-8603-E1E40ECAAF50} = {498415CF-11AF-45B0-ABCD-0C6C4D8F6F50}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3DB3590F-ABDE-4176-84D4-D51B0AD4107C}
