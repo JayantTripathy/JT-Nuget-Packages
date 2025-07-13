@@ -2,8 +2,12 @@ name: 📦 Publish JT.SmartConfigManager NuGet Package
 
 on:
   push:
+    branches:
+      - master
     tags:
-      - 'smartconfig-v*'  # Example: smartconfig-v1.0.10
+      - 'smartconfig-v*'   # Optional: Only publish when tagged
+    paths:
+      - 'src/SmartConfig/**'  # ✅ Only run when SmartConfig project changes
 
 jobs:
   publish:
