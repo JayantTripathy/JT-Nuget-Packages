@@ -2,12 +2,12 @@ name: 📦 Publish JT.SmartConfigManager NuGet Package
 
 on:
   push:
-    branches:
-      - master
     tags:
-      - 'smartconfig-v*'   # Optional: Only publish when tagged
+      - 'smartconfig-v*'             # 🔁 Trigger on version tags like 'smartconfig-v1.0.10'
     paths:
-      - 'src/SmartConfig/**'  # ✅ Only run when SmartConfig project changes
+      - 'src/JT.SmartConfigManager/**'  # ✅ Only run if SmartConfig project is touched
+
+  workflow_dispatch:                # 👈 Optional manual trigger for flexibility
 
 jobs:
   publish:
