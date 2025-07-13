@@ -3,7 +3,11 @@ name: 📦 Publish JT.SmartConfigManager NuGet Package
 on:
   push:
     tags:
-      - 'smartconfig-v*'  # Example: smartconfig-v1.0.10
+      - 'smartconfig-v*'             # 🔁 Trigger on version tags like 'smartconfig-v1.0.10'
+    paths:
+      - 'src/JT.SmartConfigManager/**'  # ✅ Only run if SmartConfig project is touched
+
+  workflow_dispatch:                # 👈 Optional manual trigger for flexibility
 
 jobs:
   publish:
