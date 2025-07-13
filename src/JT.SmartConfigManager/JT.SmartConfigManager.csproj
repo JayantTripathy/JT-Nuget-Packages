@@ -4,6 +4,42 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <PackageId>JT.SmartConfigManager</PackageId>
+    <Version>1.0.10</Version>
+    <Authors>Jayant Tripathy</Authors>
+    <Company>Jayant Tripathy</Company>
+    <Description>Unified configuration manager for .NET Core apps</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+    <PackageTags>Configuration;Azure;KeyVault;AppConfig;SmartConfig;SQL;NuGet</PackageTags>
+    <RepositoryUrl>https://github.com/JayantTripathy/JT-Nuget-Packages/tree/master/src/JT.SmartConfigManager</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/JayantTripathy/JT-Nuget-Packages/tree/main/package-consume/SmartConfig-Demo/JT.SmartConfigManager.Demo</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>JT.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <!-- ✅ README.md -->
+  <ItemGroup>
+    <None Include="JT.png" Pack="true" PackagePath="." />
+  </ItemGroup>
+
+
+  <!-- ✅ NuGet dependencies -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.AzureAppConfiguration" Version="8.2.0" />
+    <PackageReference Include="Azure.Security.KeyVault.Secrets" Version="4.8.0" />
+    <PackageReference Include="Azure.Identity" Version="1.14.0" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.6" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>

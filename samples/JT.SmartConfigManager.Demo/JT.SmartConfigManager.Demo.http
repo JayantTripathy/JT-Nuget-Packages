@@ -1,0 +1,6 @@
+@JT.SmartConfigManager.Demo_HostAddress = http://localhost:5213
+
+GET {{JT.SmartConfigManager.Demo_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
