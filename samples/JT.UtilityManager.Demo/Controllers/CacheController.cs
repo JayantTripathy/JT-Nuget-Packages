@@ -1,6 +1,6 @@
-﻿using JT.UtilityManager.Demo.Models;
+﻿using JT.UtilityManager.Caching.Interfaces;
+using JT.UtilityManager.Demo.Models;
 using JT.UtilityManager.Demo.Services;
-using JT.UtilityManager.Caching.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;

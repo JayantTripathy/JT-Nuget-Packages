@@ -1,5 +1,6 @@
 ﻿using JT.UtilityManager.Demo.Services;
 using JT.UtilityManager.Extensions;
+using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +24,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwagger();
 }
 
 // ✅ Middleware

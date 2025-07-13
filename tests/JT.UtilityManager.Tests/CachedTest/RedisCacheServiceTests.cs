@@ -1,4 +1,4 @@
-﻿using JT.UtilityManager.Services;
+﻿using JT.UtilityManager.Caching.Services;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using System;
